@@ -1,0 +1,7 @@
+version: '3'
+services:
+  main:
+    image: 1ris/aisle-velocity:latest
+    ports:
+      - 25565:25565
+    restart: always

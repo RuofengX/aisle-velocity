@@ -1,15 +1,19 @@
-FROM adoptopenjdk/openjdk11:alpine-slim
+FROM openjdk:17-alpine
 
-ARG VELOCITY_VERSION=3.0.0
-ENV VELOCITY_JAR_URL=https://versions.velocitypowered.com/download/${VELOCITY_VERSION}.jar
+ENV TZ=Asia/Shanghai JAVA_MEMORY=256M
+ARG VELOCITY_VERSION=3.0.1
 
-RUN mkdir /velocity
-WORKDIR /velocity
-RUN wget -O velocity.jar $VELOCITY_JAR_URL
+RUN mkdir /opt/velocity
+WORKDIR /opt/velocity
 
-RUN mkdir plugins
-RUN mkdir logs
+RUN set -ex \
+    && wget -O velocity.jar https://versions.velocitypowered.com/download/${VELOCITY_VERSION}.jar \
+    && mkdir plugins \
+    && mkdir logs
+
 COPY velocity.toml .
 COPY run.sh .
 
-CMD ["/velocity/run.sh"]
+EXPOSE 25565
+
+ENTRYPOINT ["/opt/velocity/run.sh"]

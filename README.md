@@ -1,7 +1,7 @@
 # Aisle Velocity
 Run velocity using docker-compose
 ## NOTICE
-Do not leak ANY KEY in config file. I am running mygame in a local network, so it could work.  
+Do not leak key in velocity.toml. I am running mygame in a local network, so don't worry about that. 
 ## 中文说明
 使用Docker容器技术一键启动OAR世界的Velocity反向代理  
 （受到[cadwallion/mc-velocity-docker](https://github.com/cadwallion/mc-velocity-docker)的启发）  

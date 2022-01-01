@@ -5,3 +5,10 @@ services:
     ports:
       - 25565:25565
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        labels: "servicename"
+        tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
+        max-size: "100m"
+        max-file: "5"

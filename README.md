@@ -1,5 +1,8 @@
 # Aisle Velocity
 RUN VELOCITY IN DOCKER  
+## NOTICE
+Do not leak ANY KEY in config file. I am running mygame in a local network, so it could work.  
+## 中文说明
 使用Docker容器技术一键启动OAR世界的Velocity反向代理  
 （受到[cadwallion/mc-velocity-docker](https://github.com/cadwallion/mc-velocity-docker)的启发）  
 ## 构建说明

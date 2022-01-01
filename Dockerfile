@@ -1,7 +1,7 @@
 FROM openjdk:17-alpine
 
 ENV TZ=Asia/Shanghai JAVA_MEMORY=256M
-ARG VELOCITY_VERSION=3.0.1
+ARG VELOCITY_VERSION=3.1.1
 
 RUN mkdir /opt/velocity
 WORKDIR /opt/velocity

@@ -1,5 +1,5 @@
 # Aisle Velocity
-RUN VELOCITY IN DOCKER  
+RUN VELOCITY USING docker-compose
 ## NOTICE
 Do not leak ANY KEY in config file. I am running mygame in a local network, so it could work.  
 ## 中文说明

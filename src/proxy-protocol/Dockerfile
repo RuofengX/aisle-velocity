@@ -16,4 +16,4 @@ COPY run.sh .
 
 EXPOSE 25565
 
-ENTRYPOINT ["/opt/velocity/run.sh"]
+ENTRYPOINT ["sh", "/opt/velocity/run.sh"]

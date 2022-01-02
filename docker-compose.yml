@@ -1,7 +1,23 @@
 version: '3'
 services:
-  main:
-    image: 1ris/aisle-velocity:latest
+  default:
+    build: ./src/default
     ports:
       - 25565:25565
     restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "500k"
+        max-file: "10"
+
+  proxy-protocol:
+    build: ./src/proxy-protocol
+    ports:
+      - 60000:25565
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "500"
+        max-file: "10"

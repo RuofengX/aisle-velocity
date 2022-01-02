@@ -1,13 +1,13 @@
 FROM openjdk:17-alpine
 
-ENV TZ=Asia/Shanghai JAVA_MEMORY=128M
-ARG VELOCITY_VERSION=3.0.1
+ENV TZ=Asia/Shanghai JAVA_MEMORY=256M
+ARG VELOCITY_VERSION=3.1.1
 
 RUN mkdir /opt/velocity
 WORKDIR /opt/velocity
 
 RUN set -ex \
-    && wget -O velocity.jar https://versions.velocitypowered.com/download/${VELOCITY_VERSION}.jar \
+    && wget -O velocity.jar https://papermc.io/api/v2/projects/velocity/versions/3.1.1/builds/98/downloads/velocity-3.1.1-98.jar \
     && mkdir plugins \
     && mkdir logs
 

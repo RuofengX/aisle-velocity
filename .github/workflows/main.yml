@@ -27,7 +27,7 @@ jobs:
         # Location of Dockerfile, if not Dockerfile in root directory
         # dockerfile: # optional, default is Dockerfile
         # Directory to run `docker build` from, if not project root
-        directory: ./src/default # optional
+        directory: ./src/default
         # Docker build arguments passed via --build-arg
         # buildArgs: # optional
         # Docker build labels passed via --label

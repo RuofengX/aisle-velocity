@@ -3,6 +3,8 @@ FROM openjdk:17-alpine
 ENV TZ=Asia/Shanghai JAVA_MEMORY=256M
 ARG VELOCITY_VERSION=3.1.1
 
+RUN apk add --no-cache tzdata
+
 RUN mkdir /opt/velocity
 WORKDIR /opt/velocity
 

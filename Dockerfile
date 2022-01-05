@@ -1,7 +1,7 @@
 FROM python:3 AS builder
 WORKDIR /
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 ARG PROJECT='velocity'
 ARG VERSION='3.1.1'

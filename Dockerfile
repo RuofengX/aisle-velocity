@@ -1,15 +1,7 @@
 FROM ruby:3 AS builder
 ARG VELOCITY_VERSION=3.1.1
 COPY fetch-velocity.rb .
-RUN ruby fetch-velocity.rb $VELOCITY_VERSION
-
-FROM adoptopenjdk/openjdk11:alpine-slim
-RUN mkdir /velocity
-WORKDIR /velocity
-RUN mkdir plugins
-RUN mkdir logs
-
-CMD ["/velocity/run.sh"]
+RUN ruby fetch-velocity.rb $VELOC
 
 #==============================================
 

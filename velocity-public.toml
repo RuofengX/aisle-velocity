@@ -64,6 +64,7 @@ ping-passthrough = "all"
 [forced-hosts]
         # Configure your forced hosts here.
         "1.oar-0.site" = ["OAR-01"]
+        "xl.oar-0.site" = ["OAR-01"]
 
 # "factions.example.com" = ["factions"]
 # "minigames.example.com" = ["minigames"]
@@ -80,7 +81,7 @@ ping-passthrough = "all"
         # Specify a custom timeout for connection timeouts here. The default is five seconds.
         connection-timeout = 5000
         # Specify a read timeout for connections here. The default is 30 seconds.
-        read-timeout = 30000
+        read-timeout = 10000
         # Enables compatibility with HAProxy's PROXY protocol. If you don't know what this is for, then
         # don't enable it.
         haproxy-protocol = false
@@ -94,7 +95,7 @@ ping-passthrough = "all"
         # loses connection to the server without an explicit disconnect message by attempting to fall the
         # user back, except in the case of read timeouts. BungeeCord will disconnect the user instead. You
         # can disable this setting to use the BungeeCord behavior.
-        failover-on-unexpected-server-disconnect = true
+        failover-on-unexpected-server-disconnect = false
         # Declares the proxy commands to 1.13+ clients.
         announce-proxy-commands = true
         # Enables the logging of commands

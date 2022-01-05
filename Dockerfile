@@ -1,7 +1,13 @@
-FROM ruby:3 AS builder
-ARG VELOCITY_VERSION=3.1.1
-COPY fetch-velocity.rb .
-RUN ruby fetch-velocity.rb $VELOCITY_VERSION
+FROM python:3 AS builder
+WORKDIR /
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+ARG PROJECT='velocity'
+ARG VERSION='3.1.1'
+
+COPY fetch-paper-api.py .
+RUN python fetch-paper-api.py -p $PROJECT -v $VERSION
 
 #==============================================
 
@@ -17,7 +23,7 @@ WORKDIR /opt/velocity
 RUN mkdir plugins
 RUN mkdir logs
 
-COPY --from=builder velocity.jar .
+COPY --from=builder target.jar ./velocity.jar
 COPY velocity-public.toml ./velocity.toml
 COPY run.sh .
 
@@ -36,7 +42,7 @@ WORKDIR /opt/velocity
 RUN mkdir plugins
 RUN mkdir logs
 
-COPY --from=builder velocity.jar .
+COPY --from=builder target.jar ./velocity.jar
 # The Only difference with public service is using another config file 
 COPY velocity-pp.toml ./velocity.toml
 COPY run.sh .

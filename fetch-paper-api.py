@@ -5,12 +5,16 @@ import urllib.request
 import argparse
 import requests
 
+# Quick entry
+open_url = urllib.request.urlopen
+
+# GLOBAL_VAR
 PAPER_API_URL = "https://papermc.io/api/v2"
 
 # logger init
 logger = logging.getLogger()    # initialize logging class
 logger.setLevel(logging.WARN)  # default log level,
-format = logging.Formatter("%(asctime)s - %(message)s")    # output format
+format = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")    # output format
 sh = logging.StreamHandler(stream=sys.stdout)    # output to standard output
 sh.setFormatter(format)
 logger.addHandler(sh)
@@ -23,8 +27,14 @@ parser.add_argument("-v", "--version", type=str,
                     help="Choice which version should use")
 args = parser.parse_args()
 
-# Quick entry
-open_url = urllib.request.urlopen
+# Nicer traceback
+def exception_handler(exception_type, exception_value, traceback):
+    # All trace are belong to this!
+    logger.error(f"Exception {exception_type.__name__}({exception_value}). Please check logs.")
+
+# Comment when debug!👇
+sys.excepthook = exception_handler
+
 
 # Custom errors
 
@@ -167,11 +177,11 @@ class Application(Downloads):
         logger.warning(
             f'Target Project: {self.project} , Version: {self.version} , Build: {self.build}, Application name: {self.app_name}')
         logger.warning(f'SHA256 code is {self.valid}')
-        logger.warning(f'Download Begin')
+        logger.warning(f'Download begin.')
 
         try:
             _file = requests.get(self.download_link)
-            logger.warning(f'Download Successed.')
+            logger.warning(f'Download successed.')
         except urllib.error.HTTPError:
             logger.error(f'HTTP Error')
             return False

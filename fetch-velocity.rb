@@ -65,7 +65,7 @@ if !version.has_builds?
 end
 
 if download_path = version.download_path
-  `wget -O velocity.jar #{download_path}`
+  `wget -q -O velocity.jar #{download_path}`
   puts "Downloaded #{version.version} build #{version.build_info["build"]} to velocity.jar"
 else
   $stderr.puts "Could not retrieve download path for #{version.version}}!"

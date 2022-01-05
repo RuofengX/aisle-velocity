@@ -43,7 +43,7 @@ RUN mkdir plugins
 RUN mkdir logs
 
 COPY --from=builder target.jar ./velocity.jar
-# The Only difference with public service is using another config file 
+# The Only difference with public stage is using another config file 
 COPY velocity-pp.toml ./velocity.toml
 COPY run.sh .
 

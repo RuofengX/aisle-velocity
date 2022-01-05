@@ -1,7 +1,9 @@
 version: '3'
 services:
-  default:
-    build: ./src/default
+  public:
+    build:
+      context: .
+      target: public
     ports:
       - 25565:25565
     restart: always
@@ -12,7 +14,9 @@ services:
         max-file: "10"
 
   proxy-protocol:
-    build: ./src/proxy-protocol
+    build:
+      context: .
+      target: proxy-protocol
     ports:
       - 60000:25565
     restart: always

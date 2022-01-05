@@ -1,13 +1,15 @@
 FROM ruby:3 AS builder
 ARG VELOCITY_VERSION=3.1.1
 COPY fetch-velocity.rb .
-RUN ruby fetch-velocity.rb $VELOC
+RUN ruby fetch-velocity.rb $VELOCITY_VERSION
 
 #==============================================
 
 FROM openjdk:17-alpine AS public
 ENV TZ=Asia/Shanghai JAVA_MEMORY=256M
-RUN apk add --no-cache tzdata
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN apk update &&\
+    apk add --no-cache tzdata
 
 RUN mkdir /opt/velocity
 WORKDIR /opt/velocity
@@ -25,8 +27,9 @@ ENTRYPOINT ["sh", "/opt/velocity/run.sh"]
 
 FROM openjdk:17-alpine AS proxy-protocol
 ENV TZ=Asia/Shanghai JAVA_MEMORY=256M
-RUN apk add --no-cache tzdata
-
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN apk update &&\
+    apk add --no-cache tzdata
 RUN mkdir /opt/velocity
 WORKDIR /opt/velocity
 

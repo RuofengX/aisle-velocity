@@ -5,13 +5,14 @@ import urllib.request
 import argparse
 import requests
 import hashlib
+from time import sleep
 
 # Quick entry
 open_url = urllib.request.urlopen
 
-# GLOBAL_VAR
+# SETTING
 PAPER_API_URL = "https://papermc.io/api/v2"
-LOG_LEVEL = 'DEBUG'
+LOG_LEVEL = 'INFO'
 
 # logger init
 log_level_map = {
@@ -249,7 +250,8 @@ if __name__ == '__main__':
     app = Application(
         project=args.project,
         version=args.version,
-        build=args.build  # 'latest' | str(build_number)
+        build=args.build
     )
     app.download_file()
     app.varify_file()
+    sleep(5)

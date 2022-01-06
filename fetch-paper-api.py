@@ -255,4 +255,3 @@ if __name__ == '__main__':
         ndigits=2
     )
     logger.info(f'Done!({time_use}s)')
-    sleep(5)

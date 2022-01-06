@@ -11,10 +11,18 @@ open_url = urllib.request.urlopen
 
 # GLOBAL_VAR
 PAPER_API_URL = "https://papermc.io/api/v2"
+LOG_LEVEL = 'DEBUG'
 
 # logger init
+log_level_map = {
+    'ERROR': logging.ERROR,
+    'WARN': logging.WARN,
+    'WARNING': logging.WARNING,
+    'INFO': logging.INFO,
+    'DEBUG': logging.DEBUG
+}
 logger = logging.getLogger()    # initialize logging class
-logger.setLevel(logging.WARN)  # default log level,
+logger.setLevel(log_level_map[LOG_LEVEL])  # default log level,
 format = logging.Formatter(
     "%(asctime)s [%(levelname)s] %(message)s")    # output format
 sh = logging.StreamHandler(stream=sys.stdout)    # output to standard output
@@ -27,7 +35,7 @@ parser.add_argument("project", type=str,
                     help=f"Choice which project should use.")
 parser.add_argument("-v", "--version", type=str,
                     help="Choice which version should use")
-parser.add_argument("-b", "--build", type=bool,
+parser.add_argument("-b", "--build", type=str,
                     help="Build number, leave blank to fetch latest.")
 
 args = parser.parse_args()
@@ -234,10 +242,14 @@ class Application(Downloads):
 
 
 if __name__ == '__main__':
+    if args.build is None:
+        logger.info(f'Will use latest build.')
+        args.build = 'latest'
+
     app = Application(
         project=args.project,
         version=args.version,
-        build='latest'  # 'latest' | str(build_number)
+        build=args.build  # 'latest' | str(build_number)
     )
     app.download_file()
     app.varify_file()

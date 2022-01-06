@@ -1,0 +1,3 @@
+[submodule "scripts/fetch-paper-api"]
+	path = scripts/fetch-paper-api
+	url = https://github.com/RuofengX/fetch-paper-api.git

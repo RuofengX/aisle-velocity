@@ -6,7 +6,7 @@ RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua
 ARG PROJECT='velocity'
 ARG VERSION='3.1.1'
 
-COPY fetch-paper-api.py .
+COPY ./scripts/fetch-paper-api/fetch-paper-api.py .
 RUN python fetch-paper-api.py $PROJECT $VERSION
 
 #==============================================

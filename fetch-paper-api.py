@@ -4,6 +4,7 @@ import logging
 import urllib.request
 import argparse
 import requests
+import hashlib
 
 # Quick entry
 open_url = urllib.request.urlopen
@@ -14,23 +15,31 @@ PAPER_API_URL = "https://papermc.io/api/v2"
 # logger init
 logger = logging.getLogger()    # initialize logging class
 logger.setLevel(logging.WARN)  # default log level,
-format = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")    # output format
+format = logging.Formatter(
+    "%(asctime)s [%(levelname)s] %(message)s")    # output format
 sh = logging.StreamHandler(stream=sys.stdout)    # output to standard output
 sh.setFormatter(format)
 logger.addHandler(sh)
 
 # argument parser
-parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--project", type=str,
-                    help=f"Choice which project should use. Should be ")
+parser = argparse.ArgumentParser(description='Fetch latest build from paper.io/api/v2, and check them with SHA256.')
+parser.add_argument("project", type=str,
+                    help=f"Choice which project should use.")
 parser.add_argument("-v", "--version", type=str,
                     help="Choice which version should use")
+parser.add_argument("-b", "--build", type=bool,
+                    help="Build number, leave blank to fetch latest.")
+
 args = parser.parse_args()
 
 # Nicer traceback
+
+
 def exception_handler(exception_type, exception_value, traceback):
     # All trace are belong to this!
-    logger.error(f"Exception {exception_type.__name__}({exception_value}). Please check logs.")
+    logger.error(
+        f"Exception {exception_type.__name__}({exception_value}). Please check logs.")
+
 
 # Comment when debug!👇
 sys.excepthook = exception_handler
@@ -144,9 +153,9 @@ class Downloads(Builds):
             if build in self.build_list:
                 self.build = build
             else:
-                logger.warning(f'Build number {build} is not aviliable, use latest instead!')
+                logger.warning(
+                    f'Build number {build} is not aviliable, use latest instead!')
                 self.build = self.get_latest_build()
-
 
         self.link = self.link + f"/builds/{self.build}"
 
@@ -162,6 +171,8 @@ class Application(Downloads):
         self.app_name, self.valid = self.app_json_parse(self.link)
         logger.debug(f'name: {self.app_name}, sha256: {self.valid}')
         self.download_link = self.link + f'/downloads/{self.app_name}'
+
+        self.download_flag = False
 
     def app_json_parse(self, url: str):
         _ret = self.safe_open(url)
@@ -181,6 +192,7 @@ class Application(Downloads):
 
         try:
             _file = requests.get(self.download_link)
+            self.download_flag = True
             logger.warning(f'Download successed.')
         except urllib.error.HTTPError:
             logger.error(f'HTTP Error')
@@ -189,14 +201,36 @@ class Application(Downloads):
         logger.info(f'Download finished, write into file...')
 
         # Use project name instead of file, you may change filename here.
-        _filename = f'target.jar'
-        with open(_filename, 'wb') as _:
+        self.filename = f'target.jar'
+        with open(self.filename, 'wb') as _:
             _.write(_file.content)
-        with open(f'{_filename}.sha256', 'w') as _:
+        with open(f'{self.filename}.sha256', 'w') as _:
             _.write(self.valid)
-        logger.warning(f'File is saved as {_filename}.')
+        logger.warning(f'File is saved as {self.filename}.')
         logger.info(f'File SHA256 validate code is {self.valid}')
         return True
+
+    def varify_file(self):
+        if self.download_flag:
+            pass
+        else:
+            logger.error(f'File not download yet, cannot start SHA256 check!')
+            return False
+
+        logger.info(f'Checking file SHA256......')
+
+        with open(self.filename, 'rb') as _:
+            _target = _.read()
+            _target_hash = hashlib.sha256(_target).hexdigest()
+        with open(f'{self.filename}.sha256', 'r') as _:
+            _api_hash = _.read()
+
+        if _target_hash == _api_hash:
+            logger.warning(f'SHA256 check passed.')
+            return True
+        else:
+            logger.error(f'SHA256 check NOT passed!')
+            return False
 
 
 if __name__ == '__main__':
@@ -206,3 +240,4 @@ if __name__ == '__main__':
         build='latest'  # 'latest' | str(build_number)
     )
     app.download_file()
+    app.varify_file()

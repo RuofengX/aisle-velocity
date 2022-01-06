@@ -31,25 +31,24 @@ sh.setFormatter(format)
 logger.addHandler(sh)
 
 # argument parser
-parser = argparse.ArgumentParser(
-    description='Fetch latest build from paper.io/api/v2, and check them with SHA256.')
+parser = argparse.ArgumentParser(description='fetch latest build from paper.io/api/v2, and check them with SHA256.')
 parser.add_argument("project", type=str,
-                    help=f"Choice which project should use.")
+                    help=f"choice which project should use.")
 parser.add_argument("version", type=str,
-                    help="Choice which version should use")
+                    help="choice which version should use")
 parser.add_argument("-b", "--build", type=str,
-                    help="Build number, leave blank to fetch latest.")
-args = parser.parse_args()
+                    help="build number, leave blank to fetch latest.")
 
+args = parser.parse_args()
 
 # Nicer traceback
 def exception_handler(exception_type, exception_value, traceback):
-    # All trace are belong to us!
+    # All trace are belong to this!
     logger.error(
         f"Exception {exception_type.__name__}({exception_value}). Please check logs.")
 
 
-# Hide traceback; Comment when debug!👇
+# Comment when debug!👇
 sys.excepthook = exception_handler
 
 

@@ -56,15 +56,17 @@ ping-passthrough = "all"
         # Configure your servers here. Each key represents the server's name, and the value
         # represents the IP address of the server to connect to.
         OAR-01 = "10.206.0.4:25565"
+        Meta = "10.206.0.8:25575"
         # factions = "127.0.0.1:30067"
         # minigames = "127.0.0.1:30068"
         # In what order we should try servers when a player logs in or is kicked from a server.
-        try = ["OAR-01"]
+        try = ["OAR-01", "Meta"]
 
 [forced-hosts]
         # Configure your forced hosts here.
         "1.oar-0.site" = ["OAR-01"]
         "xl.oar-0.site" = ["OAR-01"]
+        "alpha-test.s-2.link" = ["Meta"]
 
 # "factions.example.com" = ["factions"]
 # "minigames.example.com" = ["minigames"]

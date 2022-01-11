@@ -3,7 +3,8 @@ FROM python:3 AS builder
 ARG PROJECT='velocity'
 ARG VERSION='3.1.1'
 
-COPY ./fetch-paper-api/requirements.txt ./fetch-paper-api/main.py /opt/fetch/
+COPY ./fetch-paper-api/requirements.txt /opt/fetch/requirements.txt
+COPY ./fetch-paper-api/main.py /opt/fetch/main.py
 WORKDIR /opt/fetch
 RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 

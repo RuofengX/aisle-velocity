@@ -66,8 +66,7 @@ ping-passthrough = "all"
         # Configure your forced hosts here.
         "1.oar-0.site" = ["OAR-01"]
         "xl.oar-0.site" = ["OAR-01"]
-        "cluster.m.s-2.link" = ["Meta"]
-        "alpha-test.s-2.link" = ["Meta"]
+        "cluster.s-2.game" = ["Meta"]
 
 # "factions.example.com" = ["factions"]
 # "minigames.example.com" = ["minigames"]

@@ -1,3 +1,0 @@
-[submodule "scripts/fetch-paper-api"]
-	path = scripts/fetch-paper-api
-	url = https://gitee.com/ruofengx/fetch-paper-api.git

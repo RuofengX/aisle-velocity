@@ -1,2 +1,5 @@
 target.jar
 target.jar.sha256
+aisle-env
+.vscode
+__pycache__
